@@ -1,7 +1,8 @@
 package com.eximbank.cordova.plugin.DeviceInfo;
 
-// The native Toast API
-import android.widget.Toast;
+// The native TimeZone and Settings API
+import java.util.TimeZone;
+import android.provider.Settings;
 // Cordova-required packages
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
