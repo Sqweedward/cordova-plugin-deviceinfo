@@ -7,7 +7,7 @@ function DeviceInfo() {}
 DeviceInfo.prototype.show = function(operation, successCallback, errorCallback) {
   var options = {};
     options.operation = operation;
-    cordova.exec(successCallback, errorCallback, 'DeviceInfo', 'get', [options]);
+    cordova.exec(successCallback, errorCallback, 'DeviceInfo', 'getDeviceInfo', [options]);
 }
 
 // Installation constructor that binds DeviceInfo to window

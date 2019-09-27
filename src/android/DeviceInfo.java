@@ -22,9 +22,9 @@ public class DeviceInfo extends CordovaPlugin {
     private static final String AMAZON_DEVICE = "Amazon";
 
     @Override
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) {
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         // Verify that the user sent a 'show' action
-        if (!action.equals("get")) {
+        if (!action.equals("getDeviceInfo")) {
             callbackContext.error("\"" + action + "\" is not a recognized action.");
             return false;
         }
@@ -36,15 +36,21 @@ public class DeviceInfo extends CordovaPlugin {
             callbackContext.error("Error encountered: " + e.getMessage());
             return false;
         }
-        JSONObject r = new JSONObject();
-        r.put("uuid", this.getUuid());
-        r.put("version", this.getOSVersion());
-        r.put("platform", this.getPlatform());
-        r.put("model", this.getModel());
-        r.put("manufacturer", this.getManufacturer());
-        r.put("isVirtual", this.isVirtual());
-        r.put("serial", this.getSerialNumber());
-        callbackContext.success(r);
+        if ("getDeviceInfo".equals(action)) {
+            JSONObject r = new JSONObject();
+            r.put("uuid", this.getUuid());
+            r.put("version", this.getOSVersion());
+            r.put("platform", this.getPlatform());
+            r.put("model", this.getModel());
+            r.put("manufacturer", this.getManufacturer());
+            r.put("isVirtual", this.isVirtual());
+            r.put("serial", this.getSerialNumber());
+            callbackContext.success(r);
+        } else
+
+        {
+            return false;
+        }
         // Send a positive result to the callbackContext
         // PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
         // callbackContext.sendPluginResult(pluginResult);
