@@ -37,15 +37,20 @@ public class DeviceInfo extends CordovaPlugin {
             return false;
         }
         if ("getDeviceInfo".equals(action)) {
-            JSONObject r = new JSONObject();
-            r.put("uuid", this.getUuid());
-            r.put("version", this.getOSVersion());
-            r.put("platform", this.getPlatform());
-            r.put("model", this.getModel());
-            r.put("manufacturer", this.getManufacturer());
-            r.put("isVirtual", this.isVirtual());
-            r.put("serial", this.getSerialNumber());
-            callbackContext.success(r);
+            try {
+                JSONObject r = new JSONObject();
+                r.put("uuid", this.getUuid());
+                r.put("version", this.getOSVersion());
+                r.put("platform", this.getPlatform());
+                r.put("model", this.getModel());
+                r.put("manufacturer", this.getManufacturer());
+                r.put("isVirtual", this.isVirtual());
+                r.put("serial", this.getSerialNumber());
+                callbackContext.success("Data: " + r);
+            } catch (JSONException e) {
+                callbackContext.error("Error getting data: " + e.getMessage());
+                return false;
+            }
         } else
 
         {
