@@ -21,8 +21,10 @@
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="DeviceInfo">
                 <param name="android-package" value="com.eximbank.cordova.plugin.DeviceInfo"/>
-                <uses-permission android:name="android.permission.READ_STATE_PHONE" />
             </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.READ_STATE_PHONE" />
         </config-file>
 
         <source-file src="src/android/DeviceInfo.java" target-dir="src/com/eximbank/cordova/plugin" />
