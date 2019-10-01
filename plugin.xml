@@ -1,32 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" 
-    xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-deviceinfo" version="0.0.1">
-    <name>ToastyPlugin</name>
-
-    <description>An Android Cordova plugin that allows users to display simple Toast messages at the bottom of the screen.</description>
-    <license>MIT</license>
-
-    <keywords>cordova,android,toast,message,alert</keywords>
-    <repo>https://github.com/Sqweedward/cordova-plugin-deviceinfo.git</repo>
-    <issue>https://github.com/Sqweedward/cordova-plugin-deviceinfo/issues</issue>
-
-    <engines>
-        <engine name="cordova" version=">=3.0.0"/>
-    </engines>
-
-    <js-module src="www/deviceinfo.js" name="deviceInfo">
-        <clobbers target="window.plugins.deviceInfo" />
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-deviceinfo" version="0.0.1" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>DeviceInfo</name>
+    <js-module name="DeviceInfo" src="www/DeviceInfo.js">
+        <clobbers target="cordova.plugins" />
     </js-module>
     <platform name="android">
-        <config-file target="res/xml/config.xml" parent="/*">
+        <config-file parent="/*" target="res/xml/config.xml">
             <feature name="DeviceInfo">
-                <param name="android-package" value="com.eximbank.cordova.plugin.DeviceInfo"/>
+                <param name="android-package" value="cordova.plugin.deviceinfo.DeviceInfo.DeviceInfo" />
             </feature>
         </config-file>
-        <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.READ_STATE_PHONE" />
-        </config-file>
-
-        <source-file src="src/android/DeviceInfo.java" target-dir="src/com/eximbank/cordova/plugin" />
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/android/DeviceInfo.java" target-dir="src/cordova/plugin/deviceinfo/DeviceInfo" />
     </platform>
 </plugin>

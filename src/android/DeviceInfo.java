@@ -1,18 +1,20 @@
-package com.eximbank.cordova.plugin.DeviceInfo;
+package cordova.plugin.deviceinfo.DeviceInfo;
 
-// The native TimeZone and Settings API
-import java.util.TimeZone;
-import android.provider.Settings;
-// Cordova-required packages
-import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.PluginResult;
+import org.apache.cordova.CallbackContext;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.provider.Settings;
+import java.util.TimeZone;
 
+/**
+ * This class echoes a string called from JavaScript.
+ */
 public class DeviceInfo extends CordovaPlugin {
-    public static final String TAG = "Device";
+
+    public static final String TAG = "DeviceInfo";
 
     public static String platform; // Device OS
     public static String uuid; // Device UUID
@@ -22,45 +24,36 @@ public class DeviceInfo extends CordovaPlugin {
     private static final String AMAZON_DEVICE = "Amazon";
 
     @Override
-    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        // Verify that the user sent a 'show' action
-        if (!action.equals("getDeviceInfo")) {
-            callbackContext.error("\"" + action + "\" is not a recognized action.");
-            return false;
-        }
-        String operation;
-        try {
-            JSONObject options = args.getJSONObject(0);
-            operation = options.getString("operation");
-        } catch (JSONException e) {
-            callbackContext.error("Error encountered: " + e.getMessage());
-            return false;
-        }
-        if ("getDeviceInfo".equals(action)) {
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        if (action.equals("getdeviceInfo")) {
             try {
-                JSONObject r = new JSONObject();
-                r.put("uuid", this.getUuid());
-                r.put("version", this.getOSVersion());
-                r.put("platform", this.getPlatform());
-                r.put("model", this.getModel());
-                r.put("manufacturer", this.getManufacturer());
-                r.put("isVirtual", this.isVirtual());
-                r.put("serial", this.getSerialNumber());
-                callbackContext.success("Data: " + r);
-            } catch (JSONException e) {
-                callbackContext.error("Error getting data: " + e.getMessage());
-                return false;
+                JSONObject res = new JSONObject();
+                res.put("uuid", this.getUuid());
+                res.put("version", this.getOSVersion());
+                res.put("platform", this.getPlatform());
+                res.put("model", this.getModel());
+                res.put("manufacturer", this.getManufacturer());
+                res.put("isVirtual", this.isVirtual());
+                res.put("serial", this.getSerialNumber());
+                this.sendResponse(res, callbackContext);
+            } catch (Exception e) {
+                JSONObject error = new JSONObject();
+                error.put("error", e);
+                this.sendResponse(error, callbackContext);
             }
-        } else
-
-        {
-            return false;
+            return true;
         }
-        // Send a positive result to the callbackContext
-        // PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
-        // callbackContext.sendPluginResult(pluginResult);
-        return true;
+        return false;
     }
+
+    private void sendResponse(JSONObject message, CallbackContext callbackContext) {
+        if (message != null && message.length() > 0) {
+            callbackContext.success(message);
+        } else {
+            callbackContext.error("Expected one non-empty string argument.");
+        }
+    }
+
     // --------------------------------------------------------------------------
     // LOCAL METHODS
     // --------------------------------------------------------------------------
